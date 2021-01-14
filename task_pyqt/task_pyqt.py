@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QListWidget, QFrame, QLabel,QLineEdit, QGridLayout)
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QListWidget, QFrame, QLabel,QLineEdit, QGridLayout, QTextBrowser)
 from PyQt5.QtGui import QColor,QFont
 from PyQt5.QtCore import QTimer, QThread
 
@@ -29,24 +29,29 @@ class MainWindow(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.initLabel()
         self.initButton()
         self.initQLineEdit()
         #self.mainDTh = MainDaemonThread()
         #self.mainDTh.start()
         self.initQListWidget_wechatList()
         self.initQListWidget_customerList()
-        self.initQListWidget_strategyList()
-        self.initQListWidget_stockList()
+        self.initTextBrowser()
+        #self.initQListWidget_strategyList()
+        #self.initQListWidget_stockList()
         self.setWindowTitle('myStockAssistant')
-        self.setGeometry(100, 100, 1500, 800)
+        self.setGeometry(100, 100, 1200, 800)
         self.show()
 
-    def initLabel(self):
+    def initTextBrowser(self):
         self.label = QLabel(self)
-        self.label.setText("000000")
-        self.label.move(140, 25)
-        self.label.setFont(QFont("0", 20, QFont.Bold))
+        self.label.setText("CustomerBrower")
+        self.label.move(680, 20)
+        self.label.setFont(QFont("0", 16, QFont.Bold))
+
+        self.text_browser = QTextBrowser(self)
+        self.text_browser.move(680, 50)
+        self.text_browser.resize(500, 700)
+        self.text_browser.setText("<font color='red'>Hello World</font>")
 
     def initQListWidget_wechatList(self):
         listWidget  = QListWidget(self)
@@ -68,6 +73,7 @@ class MainWindow(QWidget):
         listWidget.addItem("Item 4")
         listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
 
+    '''
     def initQListWidget_stockList(self):
         listWidget  = QListWidget(self)
         listWidget.move(500, 150)
@@ -87,6 +93,7 @@ class MainWindow(QWidget):
         listWidget.addItem("Item 3")
         listWidget.addItem("Item 4")
         listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
+    '''
 
     def initQLineEdit(self):
         self.lineEdit = QLineEdit(self)
