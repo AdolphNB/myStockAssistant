@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QListWidget, QF
 from PyQt5.QtGui import QColor,QFont
 from PyQt5.QtCore import QTimer, QThread
 
+from childWindow import child_Window
+
 
 class MainDaemonThread(QThread):
     def __init__(self):
@@ -20,8 +22,6 @@ class MainDaemonThread(QThread):
         self.srcData = srcData
         self.dataOpt = datOpt
 
-
-
 class MainWindow(QWidget):
 
     def __init__(self):
@@ -36,8 +36,6 @@ class MainWindow(QWidget):
         self.initQListWidget_wechatList()
         self.initQListWidget_customerList()
         self.initTextBrowser()
-        #self.initQListWidget_strategyList()
-        #self.initQListWidget_stockList()
         self.setWindowTitle('myStockAssistant')
         self.setGeometry(100, 100, 1200, 800)
         self.show()
@@ -73,28 +71,6 @@ class MainWindow(QWidget):
         listWidget.addItem("Item 4")
         listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
 
-    '''
-    def initQListWidget_stockList(self):
-        listWidget  = QListWidget(self)
-        listWidget.move(500, 150)
-        listWidget.resize(160, 600)
-        listWidget.addItem("Item 1")
-        listWidget.addItem("Item 2")
-        listWidget.addItem("Item 3")
-        listWidget.addItem("Item 4")
-        listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
-
-    def initQListWidget_strategyList(self):
-        listWidget  = QListWidget(self)
-        listWidget.move(730, 150)
-        listWidget.resize(160, 600)
-        listWidget.addItem("Item 1")
-        listWidget.addItem("Item 2")
-        listWidget.addItem("Item 3")
-        listWidget.addItem("Item 4")
-        listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
-    '''
-
     def initQLineEdit(self):
         self.lineEdit = QLineEdit(self)
         self.lineEdit.move(10, 100)
@@ -122,7 +98,9 @@ class MainWindow(QWidget):
             # print("STOP")
 
     def signalListWidget_clicked(self, item):
-        print("qlistwidget click")
+        child_win = child_Window()
+        child_win.show()
+        child_win.exec()
 
     def operate(self):
         buf = self.stock.getCurrentPrice()
