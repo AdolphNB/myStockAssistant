@@ -37,7 +37,7 @@ class MainWindow(QWidget):
         self.initQListWidget_customerList()
         self.initTextBrowser()
         self.setWindowTitle('myStockAssistant')
-        self.setGeometry(100, 100, 1200, 800)
+        self.setGeometry(320, 100, 1200, 800)
         self.show()
 
     def initTextBrowser(self):
@@ -98,7 +98,7 @@ class MainWindow(QWidget):
             # print("STOP")
 
     def signalListWidget_clicked(self, item):
-        child_win = child_Window()
+        child_win = child_Window(item)
         child_win.show()
         child_win.exec()
 
