@@ -30,7 +30,7 @@ class MainWindow(QWidget):
 
     def initUI(self):
         self.initButton()
-        self.initQLineEdit()
+        #self.initQLineEdit()
         #self.mainDTh = MainDaemonThread()
         #self.mainDTh.start()
         self.initQListWidget_wechatList()
