@@ -24,19 +24,26 @@ class child_Window(QDialog):
         self.text_browser.resize(520, 90)
         self.text_browser.setText("<font color='red'>Hello World</font>")
 
+    '''
+    button event: overwrite close event
+    '''
+    def closeEvent(self, event):
+        print(event)
+        print("exit windows.")
+
     def initButton_OK(self):
         self.qbtn = QPushButton("OK", self)
         self.status = False
         self.qbtn.resize(120, 30)
-        #self.qbtn.clicked.connect(self.signalBtn_START_STOP)
         self.qbtn.move(600, 20)
+        self.qbtn.clicked.connect(self.close)
 
     def initButton_cancel(self):
         self.qbtn = QPushButton("CANCEL", self)
         self.status = False
         self.qbtn.resize(120, 30)
-        #self.qbtn.clicked.connect(self.signalBtn_START_STOP)
         self.qbtn.move(600, 70)
+        self.qbtn.clicked.connect(self.close)
 
     def initQLineEdit_code(self):
         self.lineEdit = QLineEdit(self)
