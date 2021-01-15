@@ -22,6 +22,10 @@ class MainDaemonThread(QThread):
         self.srcData = srcData
         self.dataOpt = datOpt
 
+'''
+mainwindow initialized
+    create a main window, and then new some widgets to project. 
+'''
 class MainWindow(QWidget):
 
     def __init__(self):
@@ -40,6 +44,9 @@ class MainWindow(QWidget):
         self.setGeometry(320, 100, 1200, 800)
         self.show()
 
+    '''
+    initialized a text Browsers, display customer subcripe information.
+    '''
     def initTextBrowser(self):
         self.label = QLabel(self)
         self.label.setText("CustomerBrower")
@@ -51,6 +58,13 @@ class MainWindow(QWidget):
         self.text_browser.resize(500, 700)
         self.text_browser.setText("<font color='red'>Hello World</font>")
 
+    '''
+    wechat list initialized, this list be used to select item to customer list
+    '''
+    def signal_wechatList_doublClicked(self, item):
+        print("wechat list double clicked event!")
+        pass
+
     def initQListWidget_wechatList(self):
         listWidget  = QListWidget(self)
         listWidget.move(40, 150)
@@ -59,7 +73,23 @@ class MainWindow(QWidget):
         listWidget.addItem("Item 2")
         listWidget.addItem("Item 3")
         listWidget.addItem("Item 4")
-        listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
+        listWidget.itemDoubleClicked.connect(self.signal_wechatList_doublClicked)
+
+    '''
+    customer list initialized, customer list include two click event
+    customer default information is sh0000001
+    clicked: browser customer information
+    double clicked: modify subscribe info of customer
+    '''
+    def signal_customerList_doublClicked(self, item):
+        child_win = child_Window(item)
+        child_win.show()
+        child_win.exec()
+
+    def signal_customerList_clicked(self, item):
+        print("customer list clicked event--%s" % item.text())
+        self.text_browser.setText(item.text())
+        pass
 
     def initQListWidget_customerList(self):
         listWidget  = QListWidget(self)
@@ -69,7 +99,8 @@ class MainWindow(QWidget):
         listWidget.addItem("Item 2")
         listWidget.addItem("Item 3")
         listWidget.addItem("Item 4")
-        listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
+        listWidget.itemDoubleClicked.connect(self.signal_customerList_doublClicked)
+        listWidget.itemClicked.connect(self.signal_customerList_clicked)  # 绑定点击事件
 
     def initQLineEdit(self):
         self.lineEdit = QLineEdit(self)
@@ -96,11 +127,6 @@ class MainWindow(QWidget):
             self.stock.setPostStatus(False)
             self.qbtn.setText("START")
             # print("STOP")
-
-    def signalListWidget_clicked(self, item):
-        child_win = child_Window(item)
-        child_win.show()
-        child_win.exec()
 
     def operate(self):
         buf = self.stock.getCurrentPrice()
