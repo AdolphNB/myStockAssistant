@@ -95,10 +95,10 @@ class MainWindow(QWidget):
         listWidget  = QListWidget(self)
         listWidget.move(230, 150)
         listWidget.resize(160, 600)
-        listWidget.addItem("Item 1")
-        listWidget.addItem("Item 2")
-        listWidget.addItem("Item 3")
-        listWidget.addItem("Item 4")
+        listWidget.addItem("zhangsan")
+        listWidget.addItem("lisi")
+        listWidget.addItem("wangwu")
+        listWidget.addItem("zhaoliu")
         listWidget.itemDoubleClicked.connect(self.signal_customerList_doublClicked)
         listWidget.itemClicked.connect(self.signal_customerList_clicked)  # 绑定点击事件
 

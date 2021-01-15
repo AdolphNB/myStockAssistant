@@ -7,6 +7,9 @@ from PyQt5.QtCore import QTimer, QThread
 class child_Window(QDialog):
     def __init__(self, item):
         super().__init__()
+        self.stockSel = "上证(sh999999)"
+        self.strategySel = "strategy1"
+        self.ctm_stockStrategy = self.stockSel + '\n' + self.strategySel + '\n'
         self.userText = item.text() + " setting"
         self.setWindowTitle(self.userText)
         self.resize(760, 510)
@@ -18,32 +21,41 @@ class child_Window(QDialog):
         self.initQListWidget_stockList()
         self.initQListWidget_strategyList()
 
+    '''
+    text browser setting
+    '''
+    def textBrowser_setText(self, stock_str, strategy_str):
+        self.ctm_stockStrategy = stock_str + '\n' + strategy_str + '\n'
+        self.text_browser.setText(self.ctm_stockStrategy)
+
     def initTextBrowser(self):
         self.text_browser = QTextBrowser(self)
         self.text_browser.move(40, 20)
         self.text_browser.resize(520, 90)
-        self.text_browser.setText("<font color='red'>Hello World</font>")
+        self.text_browser.setText(self.ctm_stockStrategy)
 
     '''
     button event: overwrite close event
     '''
     def closeEvent(self, event):
-        print(event)
+        if self.status_set == True:
+            pass
         print("exit windows.")
 
     def initButton_OK(self):
         self.qbtn = QPushButton("OK", self)
-        self.status = False
+        self.status_set = True
         self.qbtn.resize(120, 30)
         self.qbtn.move(600, 20)
         self.qbtn.clicked.connect(self.close)
 
     def initButton_cancel(self):
         self.qbtn = QPushButton("CANCEL", self)
-        self.status = False
+        self.status_set = False
         self.qbtn.resize(120, 30)
         self.qbtn.move(600, 70)
         self.qbtn.clicked.connect(self.close)
+
 
     def initQLineEdit_code(self):
         self.lineEdit = QLineEdit(self)
@@ -57,24 +69,36 @@ class child_Window(QDialog):
         self.lineEdit.resize(300, 30)
         #self.lineEdit.setText('600550')
 
+    '''
+        stock list configure
+    '''
+    def signalLW_stockList_clicked(self, item):
+        self.stockSel = item.text()
+        self.textBrowser_setText(self.stockSel, self.strategySel)
+
     def initQListWidget_stockList(self):
         listWidget  = QListWidget(self)
         listWidget.move(40, 160)
         listWidget.resize(300, 330)
-        listWidget.addItem("Item 1")
-        listWidget.addItem("Item 2")
-        listWidget.addItem("Item 3")
-        listWidget.addItem("Item 4")
-        #listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
+        listWidget.addItem("中国核电(sh601985)")
+        listWidget.addItem("中信证券(sh600030)")
+        listWidget.itemClicked.connect(self.signalLW_stockList_clicked)  # 绑定点击事件
+
+    '''
+        strategy list configure
+    '''
+    def signalLW_strategyList_clicked(self, item):
+        self.strategySel = item.text()
+        self.textBrowser_setText(self.stockSel, self.strategySel)
 
     def initQListWidget_strategyList(self):
         listWidget = QListWidget(self)
         listWidget.move(420, 160)
         listWidget.resize(300, 330)
-        listWidget.addItem("Item 1")
-        listWidget.addItem("Item 2")
-        listWidget.addItem("Item 3")
-        listWidget.addItem("Item 4")
-        #listWidget.itemClicked.connect(self.signalListWidget_clicked)  # 绑定点击事件
+        listWidget.addItem("量能异常变化策略")
+        listWidget.addItem("15分钟价格波动策略")
+        listWidget.addItem("小波分析策略")
+        listWidget.addItem("板块波动延迟策略")
+        listWidget.itemClicked.connect(self.signalLW_strategyList_clicked)  # 绑定点击事件
 
 
