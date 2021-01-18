@@ -9,9 +9,9 @@ class child_Window(QDialog):
         super().__init__()
         self.stockSel = "上证(sh999999)"
         self.strategySel = "strategy1"
-        self.ctm_stockStrategy = self.stockSel + '\n' + self.strategySel + '\n'
-        self.userText = item.text() + " setting"
-        self.setWindowTitle(self.userText)
+        self.ctm_stockStrategy = "Target:" + self.stockSel + ' ' + "Model:" + self.strategySel + '\n'
+        self.userText = item.text()
+        self.setWindowTitle(item.text() + " setting")
         self.resize(760, 510)
         self.initTextBrowser()
         self.initButton_OK()
@@ -25,7 +25,7 @@ class child_Window(QDialog):
     text browser setting
     '''
     def textBrowser_setText(self, stock_str, strategy_str):
-        self.ctm_stockStrategy = stock_str + '\n' + strategy_str + '\n'
+        self.ctm_stockStrategy = "Target:" + stock_str + ' ' + "Model:" + strategy_str + '\n'
         self.text_browser.setText(self.ctm_stockStrategy)
 
     def initTextBrowser(self):
@@ -37,21 +37,20 @@ class child_Window(QDialog):
     '''
     button event: overwrite close event
     '''
-    def closeEvent(self, event):
-        if self.status_set == True:
-            pass
-        print("exit windows.")
+    def store_selData(self):
+        str = self.text_browser.toPlainText()
+        print(str)
+        print("done windows.")
+        self.close()
 
     def initButton_OK(self):
         self.qbtn = QPushButton("OK", self)
-        self.status_set = True
         self.qbtn.resize(120, 30)
         self.qbtn.move(600, 20)
-        self.qbtn.clicked.connect(self.close)
+        self.qbtn.clicked.connect(self.store_selData)
 
     def initButton_cancel(self):
         self.qbtn = QPushButton("CANCEL", self)
-        self.status_set = False
         self.qbtn.resize(120, 30)
         self.qbtn.move(600, 70)
         self.qbtn.clicked.connect(self.close)
@@ -95,10 +94,10 @@ class child_Window(QDialog):
         listWidget = QListWidget(self)
         listWidget.move(420, 160)
         listWidget.resize(300, 330)
-        listWidget.addItem("量能异常变化策略")
-        listWidget.addItem("15分钟价格波动策略")
-        listWidget.addItem("小波分析策略")
-        listWidget.addItem("板块波动延迟策略")
+        listWidget.addItem("量能异常变化")
+        listWidget.addItem("15分钟价格波动")
+        listWidget.addItem("小波分析")
+        listWidget.addItem("板块波动延迟")
         listWidget.itemClicked.connect(self.signalLW_strategyList_clicked)  # 绑定点击事件
 
 
