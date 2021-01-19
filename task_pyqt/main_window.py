@@ -3,8 +3,8 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QListWidget, QF
 from PyQt5.QtGui import QColor,QFont
 from PyQt5.QtCore import QTimer, QThread
 
-from childWindow import child_Window
-
+from task_pyqt.childWindow import *
+import customerInfo.customer_opt
 
 class MainDaemonThread(QThread):
     def __init__(self):
@@ -56,7 +56,6 @@ class MainWindow(QWidget):
         self.text_browser = QTextBrowser(self)
         self.text_browser.move(680, 50)
         self.text_browser.resize(500, 700)
-        self.text_browser.setText("<font color='red'>Hello World</font>")
 
     '''
     wechat list initialized, this list be used to select item to customer list
@@ -88,8 +87,10 @@ class MainWindow(QWidget):
 
     def signal_customerList_clicked(self, item):
         print("customer list clicked event--%s" % item.text())
-        self.text_browser.setText(item.text())
-        pass
+        nameBrowser = customerInfo.customer_opt.Customer_info()
+        data_brw = nameBrowser.read_StockInfo(item.text())
+        #print(data_brw)
+        self.text_browser.setText(data_brw)
 
     def initQListWidget_customerList(self):
         listWidget  = QListWidget(self)
@@ -128,16 +129,19 @@ class MainWindow(QWidget):
             self.qbtn.setText("START")
             # print("STOP")
 
-    def operate(self):
-        buf = self.stock.getCurrentPrice()
-        self.label.setText(buf)
-
     def closeEvent(self, event):
         print("closeEvent.......")
         print("exit windows.")
 
     def mousePressEvent(self, event):
         print("mouse press event....")
+
+
+class MainWindow_task():
+    app = QApplication(sys.argv)
+    ex = MainWindow()
+    sys.exit(app.exec_())
+
 
 '''
 Main function, PyQt5 come ture.

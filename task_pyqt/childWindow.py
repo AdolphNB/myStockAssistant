@@ -2,14 +2,15 @@ import sys
 from PyQt5.QtWidgets import (QApplication, QDialog, QWidget, QPushButton, QListWidget, QFrame, QLabel,QLineEdit, QGridLayout, QTextBrowser)
 from PyQt5.QtGui import QColor,QFont
 from PyQt5.QtCore import QTimer, QThread
-
+import main
+import customerInfo.customer_opt
 
 class child_Window(QDialog):
     def __init__(self, item):
         super().__init__()
         self.stockSel = "上证(sh999999)"
         self.strategySel = "strategy1"
-        self.ctm_stockStrategy = "Target:" + self.stockSel + ' ' + "Model:" + self.strategySel + '\n'
+        self.ctm_stockStrategy = self.stockSel + ',' + self.strategySel
         self.userText = item.text()
         self.setWindowTitle(item.text() + " setting")
         self.resize(760, 510)
@@ -25,7 +26,7 @@ class child_Window(QDialog):
     text browser setting
     '''
     def textBrowser_setText(self, stock_str, strategy_str):
-        self.ctm_stockStrategy = "Target:" + stock_str + ' ' + "Model:" + strategy_str + '\n'
+        self.ctm_stockStrategy = stock_str + ',' + strategy_str
         self.text_browser.setText(self.ctm_stockStrategy)
 
     def initTextBrowser(self):
@@ -38,9 +39,10 @@ class child_Window(QDialog):
     button event: overwrite close event
     '''
     def store_selData(self):
-        str = self.text_browser.toPlainText()
-        print(str)
-        print("done windows.")
+        str_list = [self.stockSel, self.strategySel]
+        #print(str_list)
+        storeData = customerInfo.customer_opt.Customer_info()
+        storeData.addStockInfo(self.userText, str_list)
         self.close()
 
     def initButton_OK(self):
@@ -54,7 +56,6 @@ class child_Window(QDialog):
         self.qbtn.resize(120, 30)
         self.qbtn.move(600, 70)
         self.qbtn.clicked.connect(self.close)
-
 
     def initQLineEdit_code(self):
         self.lineEdit = QLineEdit(self)
