@@ -86,11 +86,10 @@ class MainWindow(QWidget):
         child_win.exec()
 
     def signal_customerList_clicked(self, item):
-        print("customer list clicked event--%s" % item.text())
         nameBrowser = customerInfo.customer_opt.Customer_info()
         data_brw = nameBrowser.read_StockInfo(item.text())
-        #print(data_brw)
-        self.text_browser.setText(data_brw)
+        if data_brw != '':
+            self.text_browser.setText(data_brw)
 
     def initQListWidget_customerList(self):
         listWidget  = QListWidget(self)

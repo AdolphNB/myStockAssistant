@@ -1,5 +1,6 @@
 import sys, os
 import csv
+import pandas as pd
 
 class Customer_info():
 
@@ -9,50 +10,37 @@ class Customer_info():
     def addStockInfo(self, wechatName, selInfo):
         self.name = wechatName + ".csv"
         file_storeName = self.pwdPath + "\\customerInfo\\subscriper_cfg\\"  + self.name
-        with open(file_storeName, 'a', encoding='utf-8') as w:
+        with open(file_storeName, 'a', encoding='utf-8', newline='') as w:
             csv_writer = csv.writer(w, dialect = 'excel')
             csv_writer.writerow(selInfo)
-            w.close()
 
     def delStockInfo(self, wechatName, selInfo):
         self.name = wechatName + ".csv"
         file_storeName = self.pwdPath + "\\customerInfo\\subscriper_cfg\\"  + self.name
-        with open(file_storeName, 'a', encoding='utf-8') as w:
+        with open(file_storeName, 'a', encoding='utf-8', newline='') as w:
             w.write(selInfo)
-            w.close()
 
     def modifyStockInfo(self, wechatName, selInfo):
         self.name = wechatName + ".csv"
         file_storeName = self.pwdPath + "\\customerInfo\\subscriper_cfg\\"  + self.name
-        with open(file_storeName, 'a', encoding='utf-8') as w:
+        with open(file_storeName, 'a', encoding='utf-8', newline='') as w:
             w.write(selInfo)
-            w.close()
 
     def delUserFromList(self, wechatName, selInfo):
         self.name = wechatName + ".csv"
         file_storeName = self.pwdPath + "\\customerInfo\\subscriper_cfg\\"  + self.name
-        with open(file_storeName, 'a', encoding='utf-8') as w:
+        with open(file_storeName, 'a', encoding='utf-8', newline='') as w:
             w.write(selInfo)
-            w.close()
 
     def read_StockInfo(self, name):
         self.name = name + ".csv"
-        try:
-            file_storeName = self.pwdPath + "\\customerInfo\\subscriper_cfg\\" + self.name
-            file = open(file_storeName, 'r', encoding='utf-8')
+        file_storeName = self.pwdPath + "\\customerInfo\\subscriper_cfg\\" + self.name
+        if not os.path.exists(file_storeName):
+            print("file isn't exist!")
+            return
+        with open(file_storeName, 'r', encoding='utf-8') as file:
             context = file.read()
-            print(context)
-            #list_result = context.split("\n")  # 以回车符\n分割成单独的行
-            #length = len(context)
-            '''
-            for i in range(length):
-                list_result[i] = list_result[i].split(",")
-            '''
             return context
-        except Exception:
-            print("文件读取转换失败，请检查文件路径及文件编码是否正确")
-        finally:
-            file.close()
 
     def readAllStockInfo(self):
         pass
