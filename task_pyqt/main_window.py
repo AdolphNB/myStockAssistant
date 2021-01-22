@@ -36,7 +36,7 @@ class MainWindow(QWidget):
         self.initButton()
         #self.initQLineEdit()
         #self.mainDTh = MainDaemonThread()
-        #self.mainDTh.start()
+        self.initBtn_LoginWechat()
         self.initQListWidget_wechatList()
         self.initQListWidget_customerList()
         self.initTextBrowser()
@@ -127,6 +127,19 @@ class MainWindow(QWidget):
             self.stock.setPostStatus(False)
             self.qbtn.setText("START")
             # print("STOP")
+
+    '''
+    button for login wechat and get customers list to qwidget.list
+    '''
+    def login_wechat(self):
+        #self.update_contactList()
+        pass
+
+    def initBtn_LoginWechat(self):
+        self.qbtn = QPushButton("LoginWechat", self)
+        self.status = False
+        self.qbtn.clicked.connect(self.login_wechat)
+        self.qbtn.move(80, 90)
 
     def closeEvent(self, event):
         print("closeEvent.......")
